@@ -6,7 +6,6 @@ import {
   Activity,
   BookOpen,
   Box,
-  ChevronDown,
   ChevronRight,
   Code2,
   LayoutDashboard,
@@ -16,7 +15,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { useSignal } from "./provider";
-import { networks, sourceUrl, type Network } from "@/lib/networks";
+import { networks, sourceUrl } from "@/lib/networks";
 import { ExternalLink } from "./ui";
 const nav = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
@@ -26,7 +25,7 @@ const nav = [
 ];
 export function Shell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { network, setNetwork, href, assessment } = useSignal();
+  const { network, href, assessment } = useSignal();
   const [menu, setMenu] = useState(false);
   const [mobile, setMobile] = useState(false);
   const sidebar = useRef<HTMLElement>(null);
@@ -193,20 +192,14 @@ export function Shell({ children }: { children: ReactNode }) {
               <i />
               {assessment.fresh ? "Connected" : "Awaiting data"}
             </span>
-            <div className="network-select">
-              <span className="network-glyph">↗</span>
-              <label className="sr-only" htmlFor="network">
-                Network
-              </label>
-              <select
-                id="network"
-                value={network}
-                onChange={(e) => setNetwork(e.target.value as Network)}
-              >
-                <option value="mainnet">Robinhood Mainnet</option>
-                <option value="testnet">Robinhood Testnet</option>
-              </select>
-              <ChevronDown size={14} />
+            <div
+              className="network-badge"
+              aria-label="Network: Robinhood Mainnet"
+            >
+              <span className="network-glyph" aria-hidden="true">
+                ↗
+              </span>
+              <span className="network-name">Robinhood Mainnet</span>
             </div>
           </div>
         </header>

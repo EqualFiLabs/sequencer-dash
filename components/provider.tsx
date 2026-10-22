@@ -8,17 +8,12 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { isNetwork, type Network } from "@/lib/networks";
+import type { Network } from "@/lib/networks";
 import type { Snapshot } from "@/lib/types";
 import { assess } from "@/lib/status";
 
 function useSignalState() {
-  const pathname = usePathname();
-  const router = useRouter();
-  const params = useSearchParams();
-  const raw = params.get("network");
-  const network: Network = isNetwork(raw) ? raw : "mainnet";
+  const network: Network = "mainnet";
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [now, setNow] = useState(0);
   const [refreshing, setRefreshing] = useState(true);
@@ -30,7 +25,7 @@ function useSignalState() {
     controller.current = abort;
     setRefreshing(true);
     try {
-      const response = await fetch(`/api/status?network=${network}`, {
+      const response = await fetch("/api/status", {
         signal: abort.signal,
         cache: "no-store",
       });
@@ -78,10 +73,7 @@ function useSignalState() {
     refreshing,
     assessment,
     refresh,
-    setNetwork: (value: Network) =>
-      router.replace(`${pathname}?network=${value}`, { scroll: false }),
-    href: (path: string) =>
-      network === "mainnet" ? path : `${path}?network=testnet`,
+    href: (path: string) => path,
   };
 }
 const Context = createContext<ReturnType<typeof useSignalState> | null>(null);

@@ -332,7 +332,7 @@ code,
   background: var(--accent);
   box-shadow: 0 0 8px #b7ed8040;
 }
-.network-select {
+.network-badge {
   position: relative;
   display: flex;
   align-items: center;
@@ -346,24 +346,11 @@ code,
   color: var(--accent);
   font-size: 21px;
 }
-.network-select select {
-  appearance: none;
-  border: none;
-  background: none;
+.network-name {
   font-size: 11px;
-  cursor: pointer;
-  padding: 9px 21px 9px 0;
-  outline-offset: 1px;
+  padding: 9px 0;
 }
-.network-select select option {
-  background: #151e13;
-}
-.network-select > svg {
-  position: absolute;
-  right: 11px;
-  pointer-events: none;
-  color: var(--muted);
-}
+
 .main-content {
   width: 100%;
   max-width: 1540px;
@@ -1928,11 +1915,11 @@ code,
   .topbar-right {
     gap: 0;
   }
-  .network-select {
+  .network-badge {
     padding-left: 9px;
     padding-right: 9px;
   }
-  .network-select select {
+  .network-name {
     font-size: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -2340,7 +2327,7 @@ code,
   font-size: 12px;
 }
 .breadcrumb,
-.network-select select {
+.network-name {
   font-size: 12px;
 }
 .sidebar-note p {
@@ -2511,7 +2498,7 @@ code,
   .integration-card h2 {
     font-size: 22px;
   }
-  .network-select select {
+  .network-name {
     font-size: 11px;
   }
 }
@@ -2619,7 +2606,7 @@ code,
   .callout p {
     font-size: 12px;
   }
-  .network-select select {
+  .network-name {
     font-size: 10px;
   }
 }

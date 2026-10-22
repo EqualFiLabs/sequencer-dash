@@ -16,12 +16,8 @@ class VerificationError extends Error {}
 async function readSnapshot(network: Network): Promise<Snapshot> {
   const base = { network, fetchedAt: Math.floor(Date.now() / 1000) };
   const n = networks[network];
-  const l1Url =
-    process.env[network === "mainnet" ? "ETH_MAINNET" : "ETH_SEPOLIA"];
-  const l2Url =
-    process.env[
-      network === "mainnet" ? "ROBINHOOD_MAINNET" : "ROBINHOOD_TESTNET"
-    ];
+  const l1Url = process.env.ETH_MAINNET;
+  const l2Url = process.env.ROBINHOOD_MAINNET;
   if (!l1Url || !l2Url)
     return { ...base, available: false, error: "not-configured" };
   try {

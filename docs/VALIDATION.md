@@ -1,5 +1,15 @@
 # Validation record — 2026-10-22
 
+## Mainnet-only update
+
+The site now serves only Ethereum Mainnet / Robinhood Mainnet. The network selector, testnet metadata, and testnet RPC configuration were removed. Pages are statically rendered with mainnet references; legacy page query parameters cannot change the network. Explicit non-mainnet API requests return 400.
+
+Validation: typecheck, existing tests, and production build passed. The rebuilt API verified Ethereum block 26,251,475 and Robinhood block 95,495,737. `/api/status?network=testnet` returned 400; `/docs/integration?network=testnet` contained the mainnet feed, no testnet feed, and no selector. The local production preview was restarted. Browser refresh was blocked by the browser tool's URL policy when selecting an existing error-page tab; this update's rendered layout was not re-verified visually.
+
+## Original implementation evidence
+
+The network-switching and testnet checks below are historical evidence for the initial candidate, not features of the current mainnet-only site.
+
 Implementation candidate: `4264c4e5d205a6a5f2c0e2b25c2c86377b736f1c` on `feat/sequencer-observatory`.
 
 | Scope                     | Method                                                                                                                   | Result                                                   | Boundary                                                                                                                                                                                                                 |

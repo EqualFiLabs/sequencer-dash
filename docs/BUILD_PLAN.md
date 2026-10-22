@@ -4,6 +4,8 @@ Build a standalone, responsive Statics-branded public dashboard and technical do
 
 ## Scope
 
+Mainnet only: Ethereum chain 1 and Robinhood chain 4663. No network selector, testnet deployment metadata, or testnet RPC configuration. Legacy page query parameters cannot change the deployment; non-mainnet API requests are rejected.
+
 - Overview, activity, contract directory, and integrated documentation.
 - Server-only reads of configured Ethereum and Robinhood RPCs; no signing, wallet connection, operator API access, or administrative actions.
 - Pin each chain's reads to a block, verify chain IDs, runtime hashes and reporter/feed bindings, and display the two-chain observation boundary honestly.
@@ -17,7 +19,7 @@ Work on feat/sequencer-observatory. The remote is empty; do not initialize or up
 
 ## Validation
 
-Typecheck, production build, focused status and cache-boundary tests, live read-only smoke checks, and browser review of desktop/mobile navigation, freshness, network switching, docs, and copy interactions. Review the committed candidate independently before handoff. Preserve any existing app services.
+Typecheck, production build, focused status and cache-boundary tests, live read-only smoke checks, and browser review of desktop/mobile navigation, freshness, mainnet-only routing, docs, and copy interactions. Review the committed candidate independently before handoff. Preserve any existing app services.
 
 ## Boundaries
 

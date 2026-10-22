@@ -22,7 +22,7 @@ set +a
 npm run dev
 ```
 
-`ETH_MAINNET` + `ROBINHOOD_MAINNET` serve mainnet. `ETH_SEPOLIA` + `ROBINHOOD_TESTNET` serve testnet. Never prefix these variables with `NEXT_PUBLIC_`. No deployment keys, operator credentials, or observer tokens are needed.
+Only `ETH_MAINNET` + `ROBINHOOD_MAINNET` are used. The site is mainnet-only. Never prefix these variables with `NEXT_PUBLIC_`. No deployment keys, operator credentials, or observer tokens are needed.
 
 ## Pages
 
@@ -30,16 +30,16 @@ npm run dev
 - `/activity`: filterable onchain event window with explorer links.
 - `/contracts`: addresses, expected runtime hashes, observed configuration, observer membership, and owner.
 - `/docs`: architecture, consumer integration, ABI/state reference, trust model, and operational guidance.
-- `?network=testnet`: select testnet on any page. Mainnet is the default.
-- `/api/status?network=mainnet`: sanitized public snapshot. Unknown network parameters return 400.
+- Pages always show mainnet. Legacy network query parameters cannot switch the feed or documentation addresses.
+- `/api/status`: sanitized mainnet snapshot. The legacy `?network=mainnet` parameter is accepted; any other network returns 400.
 
 ## Data and trust boundaries
 
-`lib/networks.ts` records public addresses and runtime hashes from the oracle repository's mainnet/testnet deployment manifests inspected 2026-10-22. Its `sourceCommit` fields record each manifest's deployment-source commit. These references are not a claim that a deployment is currently healthy.
+`lib/networks.ts` records public addresses and runtime hashes from the oracle repository's mainnet deployment manifest inspected 2026-10-22. Its `sourceCommit` records the manifest's deployment-source commit. These references are not a claim that a deployment is currently healthy.
 
-The server verifies chain IDs, code hashes, reporter/feed bindings, and reporter child-chain ID. Each chain's reads are pinned to one latest block. L1 and L2 reads are separate observations, not atomic or finalized cross-chain proof. RPC errors are replaced with fixed public error codes and are never logged or serialized. The API takes a network enum, never a user-supplied RPC URL or address.
+The server verifies chain IDs, code hashes, reporter/feed bindings, and reporter child-chain ID. Each chain's reads are pinned to one latest block. L1 and L2 reads are separate observations, not atomic or finalized cross-chain proof. RPC errors are replaced with fixed public error codes and are never logged or serialized. The API reads only mainnet, never a user-supplied RPC URL or address.
 
-Snapshots are cached and concurrent requests coalesced for 20 seconds per network, per server process. The client refreshes every 30 seconds and updates the countdown every second. Snapshot age over 90 seconds, L1 block age over 180 seconds, L2 block age over 90 seconds, or timestamps over 30 seconds in the future prevent a healthy presentation. These are dashboard thresholds, not contract constants.
+Snapshots are cached and concurrent requests coalesced for 20 seconds per server process. The client refreshes every 30 seconds and updates the countdown every second. Snapshot age over 90 seconds, L1 block age over 180 seconds, L2 block age over 90 seconds, or timestamps over 30 seconds in the future prevent a healthy presentation. These are dashboard thresholds, not contract constants.
 
 Events are the newest 40 matching logs within 10,000 L2 blocks, queried in bounded 2,000-block ranges. Failed log reads are distinct from a successfully empty result. The site does not reconstruct historical uptime or all retryable stages. Expiry can occur without an event. Observer membership is not online telemetry.
 

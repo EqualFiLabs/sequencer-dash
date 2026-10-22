@@ -186,9 +186,9 @@ function Integration() {
     <>
       <Section title="Choose the deployment">
         <p>
-          Use the feed on the same Robinhood network as your consuming contract.
-          The Ethereum reporter is the status anchor; it is not the consumer
-          feed.
+          Use this feed for consuming contracts on Robinhood Mainnet (chain
+          4663). The Ethereum reporter is the status anchor; it is not the
+          consumer feed.
         </p>
         <CodeBlock label={`${n.label} · chain ${n.l2Id}`} code={n.feed} />
         <p>

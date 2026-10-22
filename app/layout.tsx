@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import { connection } from "next/server";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
@@ -19,28 +17,17 @@ export const metadata: Metadata = {
     "A clear view of the Robinhood sequencer availability signal. Explore onchain status, heartbeat leases, and integration documentation by EqualFi Labs.",
   icons: { icon: "/assets/statics-icon.png" },
 };
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Render the requested network in the initial HTML, including docs addresses.
-  await connection();
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
-        <Suspense
-          fallback={
-            <div className="boot">
-              <img src="/assets/statics-lockup.png" alt="Statics" width="180" />
-              <p>Opening the observatory…</p>
-            </div>
-          }
-        >
-          <SignalProvider>
-            <Shell>{children}</Shell>
-          </SignalProvider>
-        </Suspense>
+        <SignalProvider>
+          <Shell>{children}</Shell>
+        </SignalProvider>
       </body>
     </html>
   );
