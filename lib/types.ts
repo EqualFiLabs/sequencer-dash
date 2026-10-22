@@ -1,0 +1,44 @@
+import type { Network } from "./networks";
+export type FeedEvent = {
+  name: string;
+  block: number;
+  transaction: string;
+  logIndex: number;
+  detail: string;
+};
+export type Snapshot = {
+  network: Network;
+  fetchedAt: number;
+  available: boolean;
+  error?: "not-configured" | "read-failed" | "verification-failed";
+  l1Block?: number;
+  l2Block?: number;
+  l1Timestamp?: number;
+  l2Timestamp?: number;
+  answer?: number;
+  reason?: number;
+  startedAt?: number;
+  updatedAt?: number;
+  healthyUntil?: number;
+  observedBlock?: number;
+  l1Healthy?: boolean;
+  l1Sequence?: number;
+  l2Sequence?: number;
+  heartbeatSequence?: number;
+  l1Version?: number;
+  l2Version?: number;
+  threshold?: number;
+  observers?: string[];
+  reporterBalance?: string;
+  reserveMessages?: number;
+  owner?: string;
+  events?: FeedEvent[];
+  eventsAvailable?: boolean;
+  eventsFromBlock?: number;
+};
+export type Assessment = {
+  tone: "healthy" | "warning" | "danger" | "neutral";
+  label: string;
+  description: string;
+  fresh: boolean;
+};
